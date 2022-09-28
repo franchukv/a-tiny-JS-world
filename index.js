@@ -6,64 +6,81 @@
 */
 
 // ======== OBJECTS DEFINITIONS ========
-const man = {
-   species: 'human',
-   gender: 'male',
-   name: 'Drogo',
-   status: 'Khal',
-   hands: 2,
-   feets: 2,
-   saying: 'Sheikh Ma Shieraki Anni.',
+class Inhabitants {
+   constructor(species, gender, name, status, saying, friends) {
+      this.species = species;
+      this.gender = gender;
+      this.name = name;
+      this.status = status;
+      this.saying = saying;
+      this.friends = friends ? friends : `no friends`;
+   }
+
+   inhabinantPropetriesToString() {
+      return `${this.species}; ${this.gender}; ${this.name}; ${this.status}; ${this.saying}; ${this.friends};`;
+   }
 }
 
-const woman = {
-   species: 'human',
-   gender: 'female',
-   name: 'Daenerys',
-   status: 'Daenerys of House Targaryen, First with Her Name, Breaker of Chains and Mother of Dragons',
-   hands: 2,
-   feets: 2,
-   saying: 'Drakaris!',
-   friends: `Fell in love with ${man.name}.`,
+class Human extends Inhabitants {
+   constructor(gender, name, status, saying, friends) {
+      super('human', gender, name, status, saying, friends);
+      this.legs = 2;
+      this.hands = 2;
+   }
+
+   inhabinantPropetriesToString() {
+      return super.inhabinantPropetriesToString() + ` ${this.legs}; ${this.hands};`;
+   }
 }
 
-const dog = {
-   species: 'dog',
-   gender: 'male',
-   name: 'Sharik',
-   status: "Yard's terrier",
-   hands: 0,
-   feets: 4,
-   saying: 'woof-woof!',
-   friends: `Only ${man.name} is friends.`,
+class Man extends Human {
+   constructor(name, status, saying, friends) {
+      super('male', name, status, saying, friends);
+   }
 }
 
-const cat = {
-   species: 'cat',
-   gender: 'female',
-   name: 'Bastet',
-   status: "Pharaoh's cat",
-   hands: 0,
-   feets: 4,
-   saying: 'Meow, bow to me!',
-   friends: 'No friends, only servants!'
+class Woman extends Human {
+   constructor(name, status, saying, friends) {
+      super('female', name, status, saying, friends);
+   }
 }
 
-const catwoman = {
-   species: 'human',
-   gender: 'female',
-   name: 'Selina Kyle',
-   status: "Superhero",
-   hands: 2,
-   feets: 2,
-   saying: cat.saying,
-   friends: `In astral connection with ${cat.name}.`,
+class Animal extends Inhabitants {
+   constructor(species, gender, name, status, saying, friends) {
+      super(species, gender, name, status, saying, friends);
+      this.paws = 4;
+   }
+
+   inhabinantPropetriesToString() {
+      return super.inhabinantPropetriesToString() + ` ${this.paws};`;
+   }
 }
+
+class Dog extends Animal {
+   constructor(gender, name, status, saying, friends) {
+      super('dog', gender, name, status, saying, friends);
+   }
+}
+
+class Cat extends Animal {
+   constructor(gender, name, status, saying, friends) {
+      super('cat', gender, name, status, saying, friends);
+   }
+}
+
+const man = new Man('Drogo', 'Khal', 'Sheikh Ma Shieraki Anni');
+const woman = new Woman('Daenerys', 'Daenerys of House Targaryen, First with Her Name, Breaker of Chains and Mother of Dragons', 'Drakaris', `Fell in love with ${man.name}`);
+const dog = new Dog('male', 'Sharik', "Yard's terrier", 'woof-woof', `Only ${man.name} is friends`);
+const cat = new Cat('female', 'Bastet', "Pharaoh's cat", 'Meow, bow to me', 'No friends, only servants');
+const catwoman = new Woman('Selina Kyle', 'Superhero', cat.saying, `In astral connection with ${cat.name}`);
 
 // ======== OUTPUT ========
-const inhabitants = [man, woman, dog, cat, catwoman];
-const properties = ['species', 'gender', 'name', 'status', 'hands', 'feets', 'saying', 'friends'];
+const allInhabitants = [
+   man.inhabinantPropetriesToString(),
+   woman.inhabinantPropetriesToString(),
+   dog.inhabinantPropetriesToString(),
+   cat.inhabinantPropetriesToString(),
+   catwoman.inhabinantPropetriesToString(),
+];
 
-inhabitants.forEach((habitant) => {
-   print(properties.map((property) => habitant[property]).join('; '));
-})
+allInhabitants.forEach((inhabitant) => print(inhabitant));
