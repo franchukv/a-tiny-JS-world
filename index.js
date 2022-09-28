@@ -14,10 +14,11 @@ class Inhabitants {
       this.status = status;
       this.saying = saying;
       this.friends = friends ? friends : `no friends`;
+      this.properties = ['species', 'gender', 'name', 'status', 'saying', 'friends',]
    }
 
    inhabinantPropetriesToString() {
-      return `${this.species}; ${this.gender}; ${this.name}; ${this.status}; ${this.saying}; ${this.friends};`;
+      return this.properties.map((property) => this[property]).join('; ');
    }
 }
 
@@ -26,10 +27,7 @@ class Human extends Inhabitants {
       super('human', gender, name, status, saying, friends);
       this.legs = 2;
       this.hands = 2;
-   }
-
-   inhabinantPropetriesToString() {
-      return super.inhabinantPropetriesToString() + ` ${this.legs}; ${this.hands};`;
+      this.properties = [...this.properties, 'hands', 'legs'];
    }
 }
 
@@ -49,10 +47,7 @@ class Animal extends Inhabitants {
    constructor(species, gender, name, status, saying, friends) {
       super(species, gender, name, status, saying, friends);
       this.paws = 4;
-   }
-
-   inhabinantPropetriesToString() {
-      return super.inhabinantPropetriesToString() + ` ${this.paws};`;
+      this.properties = [...this.properties, 'paws'];
    }
 }
 
